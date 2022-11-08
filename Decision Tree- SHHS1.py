@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[240]:
+# In[1]:
 
 
 # Importing the required packages
@@ -10,7 +10,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# In[241]:
+# In[2]:
 
 
 from sklearn import tree
@@ -18,74 +18,67 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 
-# In[242]:
+# In[3]:
 
 
 # Importing Dataset
-dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New Patient\patients-15feature.xlsx')
-dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New Patient\Absolutely Normal- 15 Feature.xlsx')
+dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Patients- Selected Features1.xlsx')
+dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Absolutely Normal- Selected Features1.xlsx')
 X = np.concatenate(  (dataPatient,dataNormal),axis=0  )
 
 y = [0]*len(dataNormal)+[1]*len(dataPatient)
 
 
-# In[243]:
+# In[4]:
 
 
 # Splitting the dataset into train and test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 100)
 
 
-# In[244]:
+# In[5]:
 
 
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(X, y)
 
 
-# In[245]:
+# In[6]:
 
 
 tree.plot_tree(clf)
 [...]
 
 
-# In[246]:
+# In[7]:
 
 
 # Decision tree with entropy
-tree = DecisionTreeClassifier(criterion='entropy', max_depth = 5, min_samples_leaf = 5, random_state = 100)
+clf_entropy = DecisionTreeClassifier(criterion='entropy', max_depth = 5, min_samples_leaf = 5, random_state = 100)
 
 
-# In[247]:
+# In[8]:
 
 
 # Performing training
-tree.fit(X_train, y_train)
+clf_entropy.fit(X_train, y_train)
 
 
-# In[248]:
-
-
-X_combined = np.vstack((X_train, X_train))
-y_combined = np.hstack((y_train, y_test))
-
-
-# In[249]:
+# In[9]:
 
 
 # Creating the classifier object
 clf_gini = DecisionTreeClassifier(criterion = "gini", max_depth= 5, min_samples_leaf=5, random_state = 100)
 
 
-# In[250]:
+# In[10]:
 
 
 # Performing training
 clf_gini.fit(X_train, y_train)
 
 
-# In[251]:
+# In[11]:
 
 
 # Function to calculate accuracy
@@ -104,50 +97,26 @@ def cal_accuracy(y_test, y_pred):
     classification_report(y_test, y_pred))
 
 
-# In[252]:
+# In[12]:
 
 
-y_pred=tree.predict(X_test)
+y_pred=clf_entropy.predict(X_test)
 
 
-# In[253]:
+# In[13]:
 
 
 cal_accuracy(y_test, y_pred)
 
 
-# In[254]:
+# In[14]:
 
 
 y_pred=clf_gini.predict(X_test)
 
 
-# In[255]:
+# In[15]:
 
 
 cal_accuracy(y_test, y_pred)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
