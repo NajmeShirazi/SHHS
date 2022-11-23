@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[192]:
+# In[23]:
 
 
 import pandas as pd
@@ -11,59 +11,54 @@ from sklearn import linear_model
 from sklearn.svm import SVC
 
 
-# In[193]:
+# In[24]:
 
 
 # Importing Dataset
-dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Patients- Selected Features1.xlsx')
-dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Absolutely Normal- Selected Features1.xlsx')
-X = np.concatenate(  (dataPatient,dataNormal),axis=0  )
+dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Patients- Stroke- SF1.xlsx')
+dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Absolutely Normal- SF1.xlsx')
+X = np.concatenate(  (dataPatient,dataNormal), axis=0  )
 
 y = [0]*len(dataNormal)+[1]*len(dataPatient)
 
 
-# In[194]:
+# In[25]:
 
 
 len(X)
 
 
-# In[195]:
-
-
-from sklearn.model_selection import train_test_split
-
-
-# In[196]:
+# In[26]:
 
 
 # Splitting the dataset into train and test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 1)
 
 
-# In[197]:
+# In[27]:
 
 
 from sklearn.svm import SVC
-#linear_model = SVC(kernel='linear', C = 10)
-#linear_model.fit(X, y)
+linear_model = SVC(kernel='linear', C = 15)
+linear_model.fit(X_train, y_train)
 
 
-# In[198]:
+# In[28]:
 
 
-rbf_model = SVC(kernel='rbf', gamma = 0.7, C = 1)
-rbf_model.fit(X, y)
+poly_model = SVC(kernel='poly', degree = 5, C = 15)
+poly_model.fit(X_train, y_train)
 
 
-# In[199]:
+# In[29]:
 
 
-poly_model = SVC(kernel='poly', degree = 7, C = 15)
-poly_model.fit(X, y)
+rbf_model = SVC(kernel='rbf', gamma = 0.3, C = 10)
+rbf_model.fit(X_train, y_train)
 
 
-# In[200]:
+# In[30]:
 
 
 # Function to calculate accuracy
@@ -82,31 +77,25 @@ def cal_accuracy(y_test, y_pred):
     classification_report(y_test, y_pred))
 
 
-# In[201]:
+# In[31]:
 
 
-y_pred = rbf_model.predict(X_test)
+y_pred = linear_model.predict(X_test)
 cal_accuracy(y_test, y_pred)
 
 
-# In[202]:
+# In[32]:
 
 
 y_pred = poly_model.predict(X_test)
 cal_accuracy(y_test, y_pred)
 
 
-# In[203]:
+# In[33]:
 
 
-#y_pred = linear_model.predict(X_test)
-#cal_accuracy(y_test, y_pred)
-
-
-# In[ ]:
-
-
-
+y_pred = rbf_model.predict(X_test)
+cal_accuracy(y_test, y_pred)
 
 
 # In[ ]:
