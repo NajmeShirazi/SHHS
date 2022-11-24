@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[73]:
+# In[44]:
 
 
 # Importing the required packages
@@ -9,46 +9,45 @@ import numpy as np
 import pandas as pd
 
 
-# In[74]:
+# In[45]:
 
 
 # Importing Dataset
-dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Patients- Selected Features1.xlsx')
-dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Absolutely Normal- Selected Features1.xlsx')
-X = np.concatenate(  (dataPatient,dataNormal),axis=0  )
+dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Heart Vessels\Patients- Heart Vessels- SF1.xlsx')
+dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Heart Vessels\Absolutely Normal- SF1.xlsx')
+X = np.concatenate(  (dataPatient,dataNormal), axis=0  )
 
 y = [0]*len(dataNormal)+[1]*len(dataPatient)
 
 
-# In[75]:
+# In[46]:
 
 
 len(X)
 
 
-# In[76]:
+# In[47]:
 
 
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
 
 
-# In[77]:
+# In[48]:
 
 
 # Splitting the dataset into train and test
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 1)
 
 
-# In[78]:
+# In[64]:
 
 
-knn = KNeighborsClassifier(n_neighbors = 5, metric='euclidean') 
-# grid search hyper parametre (in sklearn)
+knn = KNeighborsClassifier(n_neighbors = 15, metric='euclidean') 
 knn.fit(X_train, y_train)
 
 
-# In[79]:
+# In[65]:
 
 
 # Function to calculate accuracy
@@ -67,9 +66,21 @@ def cal_accuracy(y_test, y_pred):
     classification_report(y_test, y_pred))
 
 
-# In[80]:
+# In[66]:
 
 
 y_pred = knn.predict(X_test)
 cal_accuracy(y_test, y_pred)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
