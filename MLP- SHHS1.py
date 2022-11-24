@@ -13,8 +13,8 @@ import pandas as pd
 
 
 # Importing Dataset
-dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\All Patients\Patients-Str-HrtVsl-HrtFlr.xlsx')
-dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\All Patients\Absolutely Normal- SF1.xlsx')
+dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Patients- Stroke- SF1.xlsx')
+dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Absolutely Normal- SF1.xlsx')
 X = np.concatenate(  (dataPatient,dataNormal), axis=0  )
 
 y = [0]*len(dataNormal)+[1]*len(dataPatient)
@@ -34,23 +34,23 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 1)
 
 
-# In[14]:
+# In[20]:
 
 
 # Import MLPClassifer 
 from sklearn.neural_network import MLPClassifier
 
 # Create model object
-MLP_clf = MLPClassifier(hidden_layer_sizes=(2,6),
+MLP_clf = MLPClassifier(hidden_layer_sizes=(4,6),
                     random_state=5,
                     verbose=True,
                     learning_rate_init=0.01)
 
 # Fit data onto the model
-MLP_clf.fit(X,y)
+MLP_clf.fit(X_train, y_train)
 
 
-# In[15]:
+# In[21]:
 
 
 # Function to calculate accuracy
@@ -69,17 +69,11 @@ def cal_accuracy(y_test, y_pred):
     classification_report(y_test, y_pred))
 
 
-# In[16]:
+# In[22]:
 
 
 y_pred = MLP_clf.predict(X_test)
 cal_accuracy(y_test, y_pred)
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
