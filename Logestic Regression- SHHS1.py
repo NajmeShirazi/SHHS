@@ -13,8 +13,8 @@ import pandas as pd
 
 
 # Importing Dataset
-dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\All Patients\Patients-Str-HrtVsl-HrtFlr.xlsx')
-dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\All Patients\Absolutely Normal- SF1.xlsx')
+dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Patients- Stroke- SF1.xlsx')
+dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Absolutely Normal- SF1.xlsx')
 X = np.concatenate(  (dataPatient,dataNormal), axis=0  )
 
 y = [0]*len(dataNormal)+[1]*len(dataPatient)
@@ -34,18 +34,18 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 1)
 
 
-# In[11]:
+# In[17]:
 
 
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
 
-LReg_model = LogisticRegression(solver = 'liblinear', C = 7, random_state = 1)
-LReg_model.fit(X, y)
+LReg_model = LogisticRegression(solver = 'liblinear', C = 3, random_state = 1)
+LReg_model.fit(X_train, y_train)
 
 
-# In[12]:
+# In[18]:
 
 
 # Function to calculate accuracy
@@ -64,7 +64,7 @@ def cal_accuracy(y_test, y_pred):
     classification_report(y_test, y_pred))
 
 
-# In[13]:
+# In[19]:
 
 
 y_pred = LReg_model.predict(X_test)
