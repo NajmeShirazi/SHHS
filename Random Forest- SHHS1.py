@@ -13,9 +13,9 @@ import pandas as pd
 
 
 # Importing Dataset
-dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Patients- Selected Features1.xlsx')
-dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Absolutely Normal- Selected Features1.xlsx')
-X = np.concatenate(  (dataPatient,dataNormal),axis=0  )
+dataPatient = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Patients- Stroke- SF1.xlsx')
+dataNormal = pd.read_excel(r'C:\Users\Najmeh\Desktop\New\Stroke\Absolutely Normal- SF1.xlsx')
+X = np.concatenate(  (dataPatient,dataNormal), axis=0  )
 
 y = [0]*len(dataNormal)+[1]*len(dataPatient)
 
@@ -29,26 +29,20 @@ len(X)
 # In[4]:
 
 
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
-
-
-# In[5]:
-
-
 # Splitting the dataset into train and test
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state = 1)
 
 
-# In[6]:
+# In[20]:
 
 
 from sklearn.ensemble import RandomForestClassifier
-rf_model = RandomForestClassifier(n_estimators = 50, max_features="auto", random_state = 44)
+rf_model = RandomForestClassifier(n_estimators = 10, max_features="auto", random_state = 44)
 rf_model.fit(X_train, y_train)
 
 
-# In[7]:
+# In[21]:
 
 
 # Function to calculate accuracy
@@ -67,9 +61,21 @@ def cal_accuracy(y_test, y_pred):
     classification_report(y_test, y_pred))
 
 
-# In[8]:
+# In[22]:
 
 
 y_pred = rf_model.predict(X_test)
 cal_accuracy(y_test, y_pred)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
